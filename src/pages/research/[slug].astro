@@ -1,0 +1,230 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Avatar from '../../components/Avatar.astro';
+
+export async function getStaticPaths() {
+  const areas = await getCollection('research');
+  return areas.map((r) => ({ params: { slug: r.data.area_slug }, props: { area: r } }));
+}
+
+const { area } = Astro.props;
+const { Content } = await area.render();
+const base = import.meta.env.BASE_URL;
+const title = area.data.title;
+
+const allSupervisors = await getCollection('supervisors');
+const allRAs = await getCollection('research-assistants');
+const allProjects = await getCollection('projects');
+const allPubs = await getCollection('publications');
+
+const supervisors = allSupervisors.filter((s) => s.data.research_area.includes(title)).sort((a, b) => a.data.order - b.data.order);
+const allAssistants = allRAs.filter((r) => r.data.research_area.includes(title)).sort((a, b) => a.data.order - b.data.order);
+const assistants = allAssistants.filter((r) => r.data.designation === 'Research Assistant');
+const juniorAssistants = allAssistants.filter((r) => r.data.designation === 'Junior Research Assistant');
+const projects = allProjects.filter((p) => p.data.research_area.includes(title));
+const pubs = allPubs.filter((p) => p.data.research_area.includes(title));
+
+const grouped = {
+  Published: pubs.filter((p) => p.data.status === 'Published'),
+  Accepted: pubs.filter((p) => p.data.status === 'Accepted'),
+  'Under Review': pubs.filter((p) => p.data.status === 'Under Review'),
+  Ongoing: pubs.filter((p) => p.data.status === 'Ongoing'),
+};
+
+// Which sections actually exist for this area — drives both the sticky
+// nav and the manual "Next section" click-through at the bottom of each.
+const sections = [
+  { id: 'overview', label: 'Overview', show: true },
+  { id: 'objectives', label: 'Objectives', show: area.data.objectives.length > 0 },
+  { id: 'current-research', label: 'Current Research', show: area.data.current_research.length > 0 },
+  { id: 'projects', label: 'Projects', show: projects.length > 0 },
+  { id: 'supervisors', label: 'Supervisors', show: supervisors.length > 0 },
+  { id: 'assistants', label: 'Research Assistants', show: assistants.length > 0 },
+  { id: 'junior-assistants', label: 'Junior Research Assistants', show: juniorAssistants.length > 0 },
+  { id: 'publications', label: 'Publications', show: true },
+].filter((s) => s.show);
+
+function nextOf(id: string) {
+  const i = sections.findIndex((s) => s.id === id);
+  return i >= 0 && i < sections.length - 1 ? sections[i + 1] : null;
+}
+---
+<BaseLayout title={title} description={area.data.summary}>
+  <!-- Sticky section nav: hover to preview, click to jump -->
+  <nav class="sticky top-16 z-40 bg-paper/95 backdrop-blur-md border-b border-ink/10">
+    <div class="max-w-content mx-auto px-6 py-3 flex gap-1 overflow-x-auto font-mono text-xs uppercase tracking-wide">
+      {sections.map((s) => (
+        <a href={`#${s.id}`} data-section-link={s.id} class="section-pill whitespace-nowrap px-3 py-2 rounded-md text-slate-soft hover:text-signal hover:bg-signal/5 transition-colors">
+          {s.label}
+        </a>
+      ))}
+    </div>
+  </nav>
+
+  <section class="max-w-content mx-auto px-6 py-16">
+    <a href={`${base}research/`} class="font-mono text-xs text-signal hover:underline">← All research areas</a>
+
+    <div id="overview" class="scroll-mt-32">
+      <span class="section-label mt-6 block">Research area</span>
+      <h1 class="text-4xl mb-6" data-reveal>{title}</h1>
+      <p class="max-w-2xl text-lg text-slate-soft leading-relaxed" data-reveal>{area.data.summary}</p>
+      <div class="prose prose-neutral max-w-2xl mt-8" data-reveal>
+        <Content />
+      </div>
+    </div>
+
+    {area.data.objectives.length > 0 && (
+      <div id="objectives" class="mt-14 scroll-mt-32" data-reveal>
+        <span class="section-label">Research objectives</span>
+        <ul class="grid sm:grid-cols-2 gap-3 mt-4">
+          {area.data.objectives.map((o) => <li class="card !p-4 text-sm leading-relaxed">{o}</li>)}
+        </ul>
+        {nextOf('objectives') && (
+          <a href={`#${nextOf('objectives')!.id}`} class="mt-6 inline-flex items-center gap-2 font-mono text-xs text-signal hover:underline">
+            Next: {nextOf('objectives')!.label} →
+          </a>
+        )}
+      </div>
+    )}
+
+    {area.data.current_research.length > 0 && (
+      <div id="current-research" class="mt-14 scroll-mt-32" data-reveal>
+        <span class="section-label">Current research</span>
+        <ul class="grid sm:grid-cols-2 gap-3 mt-4">
+          {area.data.current_research.map((o) => <li class="card !p-4 text-sm leading-relaxed">{o}</li>)}
+        </ul>
+        {nextOf('current-research') && (
+          <a href={`#${nextOf('current-research')!.id}`} class="mt-6 inline-flex items-center gap-2 font-mono text-xs text-signal hover:underline">
+            Next: {nextOf('current-research')!.label} →
+          </a>
+        )}
+      </div>
+    )}
+
+    {projects.length > 0 && (
+      <div id="projects" class="mt-16 scroll-mt-32" data-reveal>
+        <span class="section-label">Projects</span>
+        <div class="grid md:grid-cols-2 gap-5 mt-4">
+          {projects.map((p) => (
+            <div class="card">
+              <div class="flex items-center justify-between mb-2">
+                <p class="font-display text-lg">{p.data.title}</p>
+                <span class="tag">{p.data.status}</span>
+              </div>
+              <p class="text-sm text-slate-soft leading-relaxed">{p.data.description}</p>
+            </div>
+          ))}
+        </div>
+        {nextOf('projects') && (
+          <a href={`#${nextOf('projects')!.id}`} class="mt-6 inline-flex items-center gap-2 font-mono text-xs text-signal hover:underline">
+            Next: {nextOf('projects')!.label} →
+          </a>
+        )}
+      </div>
+    )}
+
+    {supervisors.length > 0 && (
+      <div id="supervisors" class="mt-16 scroll-mt-32" data-reveal>
+        <span class="section-label">Supervisors</span>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-4">
+          {supervisors.map((s) => (
+            <a href={`${base}people/supervisors/${s.slug}/`} class="card block text-center">
+              <div class="flex justify-center mb-3"><Avatar name={s.data.name} photo={s.data.photo} /></div>
+              <p class="font-medium text-ink">{s.data.name}</p>
+              <p class="text-xs text-slate-soft">{s.data.designation}</p>
+              <p class="text-xs text-slate-soft">{s.data.department}</p>
+              {s.data.research_interests.length > 0 && (
+                <p class="mt-3 text-[11px] font-mono text-signal">{s.data.research_interests.slice(0, 2).join(' · ')}</p>
+              )}
+            </a>
+          ))}
+        </div>
+        {nextOf('supervisors') && (
+          <a href={`#${nextOf('supervisors')!.id}`} class="mt-6 inline-flex items-center gap-2 font-mono text-xs text-signal hover:underline">
+            Next: {nextOf('supervisors')!.label} →
+          </a>
+        )}
+      </div>
+    )}
+
+    {assistants.length > 0 && (
+      <div id="assistants" class="mt-16 scroll-mt-32" data-reveal>
+        <span class="section-label">Research assistants</span>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-4">
+          {assistants.map((s) => (
+            <a href={`${base}people/research-assistants/${s.slug}/`} class="card block text-center">
+              <div class="flex justify-center mb-3"><Avatar name={s.data.name} photo={s.data.photo} /></div>
+              <p class="font-medium text-ink">{s.data.name}</p>
+              <p class="text-xs text-slate-soft">{s.data.designation}</p>
+            </a>
+          ))}
+        </div>
+        {nextOf('assistants') && (
+          <a href={`#${nextOf('assistants')!.id}`} class="mt-6 inline-flex items-center gap-2 font-mono text-xs text-signal hover:underline">
+            Next: {nextOf('assistants')!.label} →
+          </a>
+        )}
+      </div>
+    )}
+
+    {juniorAssistants.length > 0 && (
+      <div id="junior-assistants" class="mt-16 scroll-mt-32" data-reveal>
+        <span class="section-label">Junior research assistants</span>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-4">
+          {juniorAssistants.map((s) => (
+            <a href={`${base}people/research-assistants/${s.slug}/`} class="card block text-center">
+              <div class="flex justify-center mb-3"><Avatar name={s.data.name} photo={s.data.photo} /></div>
+              <p class="font-medium text-ink">{s.data.name}</p>
+              <p class="text-xs text-slate-soft">{s.data.designation}</p>
+            </a>
+          ))}
+        </div>
+        {nextOf('junior-assistants') && (
+          <a href={`#${nextOf('junior-assistants')!.id}`} class="mt-6 inline-flex items-center gap-2 font-mono text-xs text-signal hover:underline">
+            Next: {nextOf('junior-assistants')!.label} →
+          </a>
+        )}
+      </div>
+    )}
+
+    <div id="publications" class="mt-16 mb-4 scroll-mt-32" data-reveal>
+      <span class="section-label">Publications</span>
+      {Object.entries(grouped).map(([status, list]) => list.length > 0 && (
+        <div class="mt-6">
+          <p class="font-mono text-xs uppercase text-slate-soft mb-3">{status} ({list.length})</p>
+          <ul class="space-y-4">
+            {list.map((p) => (
+              <li class="border-b border-ink/10 pb-4">
+                <p class="font-medium text-ink leading-snug">{p.data.title}</p>
+                <p class="text-xs text-slate-soft mt-1 font-mono">{p.data.authors.join(', ')} · {p.data.venue} · {p.data.year}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+      {pubs.length === 0 && <p class="text-sm text-slate-soft">No publications yet for this area.</p>}
+      <a href={`${base}research/`} class="mt-8 inline-flex items-center gap-2 font-mono text-xs text-signal hover:underline">← Back to all research areas</a>
+    </div>
+  </section>
+
+  <script define:vars={{ sectionIds: sections.map((s) => s.id) }}>
+    const links = document.querySelectorAll('[data-section-link]');
+    const targets = sectionIds.map((id) => document.getElementById(id)).filter(Boolean);
+    const setActive = (id) => {
+      links.forEach((l) => {
+        const active = l.getAttribute('data-section-link') === id;
+        l.classList.toggle('text-signal', active);
+        l.classList.toggle('bg-signal/10', active);
+      });
+    };
+    const io = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.filter((e) => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        if (visible.length) setActive(visible[0].target.id);
+      },
+      { rootMargin: '-30% 0px -60% 0px', threshold: 0 }
+    );
+    targets.forEach((t) => io.observe(t));
+  </script>
+</BaseLayout>

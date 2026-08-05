@@ -1,0 +1,44 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+import { site } from '../lib/site';
+
+const base = import.meta.env.BASE_URL;
+const items = site.gallery.map((g) => {
+  const abs = path.resolve('./public/images/lab', g.filename);
+  return { ...g, exists: fs.existsSync(abs) };
+});
+---
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+  {items.map((item, i) => (
+    <figure
+      class="group relative aspect-[4/5] overflow-hidden rounded-md border border-ink/10"
+      data-reveal
+      style={`transition-delay:${i * 80}ms`}
+    >
+      {item.exists ? (
+        <img
+          src={`${base}images/lab/${item.filename}`}
+          alt={item.caption}
+          class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+        />
+      ) : (
+        <div class="absolute inset-0 placeholder-tile flex items-end p-4">
+          <svg class="absolute top-4 left-4 opacity-40" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2B2621" stroke-width="1.4">
+            <path d="M3 8a2 2 0 0 1 2-2h2l1.5-2h7L17 6h2a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/>
+            <circle cx="12" cy="13" r="3.5"/>
+          </svg>
+        </div>
+      )}
+      <figcaption class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-ink/70 to-transparent p-3">
+        <span class="text-[11px] text-paper/90 tracking-wide">{item.caption}</span>
+      </figcaption>
+    </figure>
+  ))}
+</div>
+
+<style>
+  .placeholder-tile {
+    background: linear-gradient(135deg, #F2EEE4 0%, #EAE4D8 100%);
+  }
+</style>

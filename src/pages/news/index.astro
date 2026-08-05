@@ -1,0 +1,24 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const news = (await getCollection('news')).sort((a, b) => +b.data.date - +a.data.date);
+---
+<BaseLayout title="News">
+  <section class="max-w-content mx-auto px-6 py-20">
+    <span class="section-label" data-reveal>Announcements</span>
+    <h1 class="text-4xl mb-10" data-reveal>News</h1>
+    <div class="space-y-6">
+      {news.map((n) => (
+        <article class="card" data-reveal>
+          <div class="flex items-center gap-3 mb-2">
+            <span class="tag">{n.data.category}</span>
+            <span class="font-mono text-xs text-slate-soft">{n.data.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+          </div>
+          <p class="font-display text-xl">{n.data.title}</p>
+          <p class="text-sm text-slate-soft mt-2 leading-relaxed">{n.data.description}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
