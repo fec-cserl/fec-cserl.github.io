@@ -1,0 +1,44 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Avatar from '../../components/Avatar.astro';
+
+const base = import.meta.env.BASE_URL;
+const supervisors = (await getCollection('supervisors')).sort((a, b) => a.data.order - b.data.order);
+const allRas = (await getCollection('research-assistants')).sort((a, b) => a.data.order - b.data.order);
+const ras = allRas.filter((r) => r.data.designation === 'Research Assistant');
+const juniorRas = allRas.filter((r) => r.data.designation === 'Junior Research Assistant');
+const alumni = (await getCollection('alumni')).sort((a, b) => a.data.order - b.data.order);
+
+const groups = [
+  { title: 'Supervisors', people: supervisors, base: 'supervisors', sub: (p: any) => p.data.designation },
+  { title: 'Research Assistants', people: ras, base: 'research-assistants', sub: (p: any) => p.data.research_area.join(', ') },
+  { title: 'Junior Research Assistants', people: juniorRas, base: 'research-assistants', sub: (p: any) => p.data.research_area.join(', ') },
+  { title: 'Alumni', people: alumni, base: 'alumni', sub: (p: any) => p.data.current_position },
+];
+---
+<BaseLayout title="People">
+  <section class="max-w-content mx-auto px-6 py-20">
+    <span class="section-label" data-reveal>Our community</span>
+    <h1 class="text-4xl mb-4" data-reveal>People</h1>
+    <p class="text-slate-soft mb-12 max-w-lg" data-reveal>Supervisor · Research Assistant · Junior Research Assistant · Alumni</p>
+
+    {groups.map((g) => g.people.length > 0 && (
+      <div data-reveal class="mb-16">
+        <div class="flex items-center gap-3 mb-5">
+          <h2 class="font-display text-2xl">{g.title}</h2>
+          <span class="tag">{g.people.length}</span>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {g.people.map((p: any) => (
+            <a href={`${base}people/${g.base}/${p.slug}/`} class="card block text-center">
+              <div class="flex justify-center mb-3"><Avatar name={p.data.name} photo={p.data.photo} /></div>
+              <p class="font-medium text-ink">{p.data.name}</p>
+              <p class="text-xs text-slate-soft">{g.sub(p)}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+    ))}
+  </section>
+</BaseLayout>

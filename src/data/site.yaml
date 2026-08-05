@@ -1,0 +1,108 @@
+# ═══════════════════════════════════════════════════════════════
+#  SITE SETTINGS — edit this file to change global site text.
+#  Research/People/Publications/Projects/News/Events each live in
+#  their own folder under src/content/ (one file per item).
+# ═══════════════════════════════════════════════════════════════
+
+site_name: "FEC CSE Research Lab"
+site_short_name: "FEC CSE Lab"
+tagline: "Advancing research in Artificial Intelligence, Computing, and Emerging Technologies."
+
+hero:
+  eyebrow: "Faculty of Engineering & Computing"
+  # Drop a wide photo of the lab into public/images/lab/ with this exact
+  # filename and it becomes the homepage hero background automatically.
+  # Until then, a designed gradient placeholder is shown instead.
+  background_image: "hero.jpg"
+  buttons:
+    - label: "Explore Research"
+      href: "/research/"
+    - label: "Meet Researchers"
+      href: "/people/"
+    - label: "Publications"
+      href: "/publications/"
+    - label: "Join Us"
+      href: "/join/"
+
+about:
+  heading: "About the Lab"
+  body: |
+    FEC CSE Research Lab (FEC CSE Lab) brings together faculty, research
+    assistants, and student researchers working across artificial intelligence,
+    computing systems, and emerging technologies. We pursue rigorous, publishable
+    research while training the next generation of computing researchers.
+  mission: "To conduct impactful, reproducible research and build an open, collaborative environment for computing scholars at every career stage."
+  vision: "To be recognised as a leading computing research centre known for the quality of its publications and the strength of its people."
+  # Lab Director's welcome message. Replace name/designation/message with the
+  # real details, and drop a photo into public/images/people/ then reference
+  # it below (e.g. "images/people/director.jpg") — same pattern as everyone else.
+  director:
+    name: "Director's Name"
+    designation: "Lab Director"
+    photo: "images/people/director.jpg"
+    message: |
+      Welcome to FEC CSE Research Lab. Replace this placeholder with the
+      Director's own welcome message — a few sentences on the lab's mission,
+      what it's like to work here, and what the lab looks for in new members.
+
+# Homepage "Inside the Lab" gallery.
+# Drop real photos into public/images/lab/ using these exact filenames and
+# they will appear automatically. Until a file exists, a designed
+# placeholder tile is shown instead — nothing looks broken either way.
+gallery:
+  - filename: "workspace.jpg"
+    caption: "The main research workspace"
+  - filename: "seminar.jpg"
+    caption: "Weekly research seminar"
+  - filename: "whiteboard.jpg"
+    caption: "Whiteboard problem session"
+  - filename: "team.jpg"
+    caption: "The team, Spring 2026"
+
+contact:
+  address: "Faculty of Engineering & Computing, [Your University Name], [City, Country]"
+  email: "ccr@example.edu"
+  phone: "+00 000 000 000"
+  map_embed_url: ""
+
+join:
+  heading: "Join Our Research Community"
+  intro: "We welcome enquiries from motivated students and researchers at every level."
+  # Recruitment form submission. Sign up free at https://formspree.io,
+  # create a form, and paste its endpoint below — e.g.
+  # "https://formspree.io/f/abcdwxyz". Leave blank to show a setup notice
+  # instead of the live form.
+  formspree_endpoint: ""
+  positions:
+    - "Research Assistant"
+    - "Junior Research Assistant"
+    - "Undergraduate Researcher"
+    - "Intern"
+  opportunities:
+    - title: "Research Assistant Positions"
+      description: "Funded positions for graduate students working alongside our supervisors on active projects."
+    - title: "Undergraduate Research Opportunities"
+      description: "Short-term research placements for final-year undergraduates to gain hands-on experience."
+    - title: "Thesis Opportunities"
+      description: "Supervised undergraduate and postgraduate thesis topics across all active research areas."
+    - title: "Internships"
+      description: "Summer and semester-long internships for students exploring a research career."
+  available_topics:
+    - "Efficient fine-tuning of large language models"
+    - "Explainable computer vision for medical imaging"
+    - "Adversarial robustness in machine learning systems"
+    - "Low-resource NLP for regional languages"
+  application_process: |
+    1. Review the available topics and our current research areas.
+    2. Email the relevant supervisor with your CV and a short statement of interest.
+    3. Shortlisted candidates will be invited for an interview.
+    4. Selected candidates begin with an onboarding meeting with their supervisor.
+
+footer:
+  socials:
+    - label: "GitHub"
+      href: "https://github.com/"
+    - label: "LinkedIn"
+      href: "https://linkedin.com/"
+    - label: "Google Scholar"
+      href: "https://scholar.google.com/"

@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import RecruitForm from '../components/RecruitForm.astro';
+import { site } from '../lib/site';
+const j = site.join;
+---
+<BaseLayout title="Join Us">
+  <section class="max-w-content mx-auto px-6 py-20">
+    <span class="section-label" data-reveal>Get involved</span>
+    <h1 class="text-4xl mb-4" data-reveal>{j.heading}</h1>
+    <p class="max-w-2xl text-slate-soft mb-14" data-reveal>{j.intro}</p>
+
+    <div class="grid md:grid-cols-2 gap-5 mb-16">
+      {j.opportunities.map((o) => (
+        <div class="card" data-reveal>
+          <p class="font-display text-lg mb-2">{o.title}</p>
+          <p class="text-sm text-slate-soft leading-relaxed">{o.description}</p>
+        </div>
+      ))}
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-10">
+      <div data-reveal>
+        <span class="section-label">Available topics</span>
+        <ul class="mt-4 space-y-2">
+          {j.available_topics.map((t) => <li class="text-sm text-ink border-l-2 border-signal pl-3">{t}</li>)}
+        </ul>
+      </div>
+      <div data-reveal>
+        <span class="section-label">Application process</span>
+        <div class="mt-4 text-sm text-slate-soft leading-relaxed whitespace-pre-line">{j.application_process}</div>
+      </div>
+    </div>
+
+    <div class="mt-20 max-w-3xl" data-reveal>
+      <span class="section-label">Apply now</span>
+      <h2 class="text-3xl mb-6">Recruitment Form</h2>
+      <RecruitForm />
+    </div>
+
+    <div class="mt-16 card" data-reveal>
+      <p class="font-display text-lg mb-2">Contact us</p>
+      <p class="text-sm text-slate-soft">{site.contact.email}</p>
+    </div>
+  </section>
+</BaseLayout>

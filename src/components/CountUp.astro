@@ -1,0 +1,35 @@
+---
+interface Props { value: number; label: string }
+const { value, label } = Astro.props;
+---
+<div data-reveal>
+  <p class="font-display text-3xl text-ink count-up" data-target={value}>0</p>
+  <p class="mt-2 text-[11px] uppercase tracking-wide text-slate-soft">{label}</p>
+</div>
+
+<script>
+  const els = document.querySelectorAll<HTMLElement>('.count-up');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const animate = (el: HTMLElement) => {
+    const target = Number(el.dataset.target || '0');
+    if (reduced || target === 0) { el.textContent = String(target); return; }
+    const dur = 900;
+    const start = performance.now();
+    const step = (now: number) => {
+      const p = Math.min(1, (now - start) / dur);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = String(Math.round(eased * target));
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (e.isIntersecting) {
+        animate(e.target as HTMLElement);
+        io.unobserve(e.target);
+      }
+    }
+  }, { threshold: 0.4 });
+  els.forEach((el) => io.observe(el));
+</script>

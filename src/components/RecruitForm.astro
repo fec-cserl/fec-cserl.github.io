@@ -1,0 +1,104 @@
+---
+import { getCollection } from 'astro:content';
+import { site } from '../lib/site';
+
+const research = (await getCollection('research')).sort((a, b) => a.data.order - b.data.order);
+const endpoint = site.join.formspree_endpoint;
+const positions = site.join.positions;
+---
+{endpoint ? (
+  <form id="recruit-form" action={endpoint} method="POST" class="card !p-8 grid gap-5">
+    <div class="grid sm:grid-cols-2 gap-5">
+      <label class="text-sm">
+        <span class="block font-mono text-xs uppercase tracking-wide text-slate-soft mb-2">Full name *</span>
+        <input required name="name" type="text" class="field" placeholder="Jane Doe" />
+      </label>
+      <label class="text-sm">
+        <span class="block font-mono text-xs uppercase tracking-wide text-slate-soft mb-2">Email *</span>
+        <input required name="email" type="email" class="field" placeholder="jane@example.edu" />
+      </label>
+    </div>
+
+    <div class="grid sm:grid-cols-2 gap-5">
+      <label class="text-sm">
+        <span class="block font-mono text-xs uppercase tracking-wide text-slate-soft mb-2">Position of interest *</span>
+        <select required name="position" class="field">
+          <option value="" disabled selected>Select a position</option>
+          {positions.map((p) => <option value={p}>{p}</option>)}
+        </select>
+      </label>
+      <label class="text-sm">
+        <span class="block font-mono text-xs uppercase tracking-wide text-slate-soft mb-2">Research area</span>
+        <select name="research_area" class="field">
+          <option value="" disabled selected>Select an area</option>
+          {research.map((r) => <option value={r.data.title}>{r.data.title}</option>)}
+        </select>
+      </label>
+    </div>
+
+    <label class="text-sm">
+      <span class="block font-mono text-xs uppercase tracking-wide text-slate-soft mb-2">CV / portfolio link</span>
+      <input name="cv_link" type="url" class="field" placeholder="https://" />
+    </label>
+
+    <label class="text-sm">
+      <span class="block font-mono text-xs uppercase tracking-wide text-slate-soft mb-2">Statement of interest *</span>
+      <textarea required name="message" rows="5" class="field resize-none" placeholder="Tell us why you'd like to join and what you're hoping to work on..."></textarea>
+    </label>
+
+    <div class="flex items-center justify-between pt-2">
+      <p id="recruit-status" class="text-sm text-slate-soft"></p>
+      <button type="submit" id="recruit-submit" class="btn-primary">Submit application</button>
+    </div>
+  </form>
+) : (
+  <div class="border border-dashed border-ink/20 rounded-md p-10 text-center text-slate-soft text-sm">
+    No recruitment form connected yet.<br />
+    Create a free form at <a href="https://formspree.io" class="text-signal hover:underline">formspree.io</a>, then add
+    its endpoint in <code class="font-mono text-xs">src/data/site.yaml</code> →
+    <code class="font-mono text-xs">join.formspree_endpoint</code> to activate this form.
+  </div>
+)}
+
+<style>
+  .field {
+    @apply w-full border border-ink/15 bg-white rounded-md px-3.5 py-2.5 text-sm text-ink placeholder:text-slate-soft/60 outline-none transition-colors;
+  }
+  .field:focus {
+    @apply border-signal ring-1 ring-signal/30;
+  }
+</style>
+
+<script>
+  const form = document.getElementById('recruit-form') as HTMLFormElement | null;
+  const status = document.getElementById('recruit-status');
+  const btn = document.getElementById('recruit-submit') as HTMLButtonElement | null;
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!btn || !status) return;
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    status.textContent = '';
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { Accept: 'application/json' },
+      });
+      if (res.ok) {
+        form.reset();
+        status.textContent = 'Application sent — thank you!';
+        status.classList.add('text-signal');
+        btn.textContent = 'Submit application';
+      } else {
+        throw new Error('Submission failed');
+      }
+    } catch {
+      status.textContent = 'Something went wrong. Please try again or email us directly.';
+      btn.textContent = 'Submit application';
+    } finally {
+      btn.disabled = false;
+    }
+  });
+</script>

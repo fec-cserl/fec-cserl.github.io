@@ -1,0 +1,45 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const base = import.meta.env.BASE_URL;
+const areas = (await getCollection('research')).sort((a, b) => a.data.order - b.data.order);
+const supervisors = await getCollection('supervisors');
+const ras = await getCollection('research-assistants');
+const pubs = await getCollection('publications');
+
+const withCounts = areas.map((r) => ({
+  area: r,
+  supervisorCount: supervisors.filter((s) => s.data.research_area.includes(r.data.title)).length,
+  raCount: ras.filter((s) => s.data.research_area.includes(r.data.title)).length,
+  pubCount: pubs.filter((p) => p.data.research_area.includes(r.data.title)).length,
+}));
+---
+<BaseLayout title="Research">
+  <section class="max-w-content mx-auto px-6 py-20">
+    <span class="section-label" data-reveal>Research areas</span>
+    <h1 class="text-4xl mb-3" data-reveal>Where our research happens</h1>
+    <p class="text-slate-soft mb-10 max-w-lg" data-reveal>Hover a card for a quick preview, or click through to explore every section — objectives, projects, people, and publications.</p>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+      {withCounts.map(({ area: r, supervisorCount, raCount, pubCount }) => (
+        <a href={`${base}research/${r.data.area_slug}/`} class="card group relative block overflow-hidden" data-reveal>
+          <p class="font-display text-xl mb-2">{r.data.title}</p>
+          <p class="text-sm text-slate-soft leading-relaxed">{r.data.summary}</p>
+
+          <div class="mt-4 flex gap-4 font-mono text-[11px] text-slate-soft/70 transition-opacity duration-300 group-hover:opacity-0">
+            <span>{supervisorCount} supervisors</span>
+            <span>{pubCount} publications</span>
+          </div>
+
+          <!-- hover preview: quick jump list -->
+          <div class="absolute inset-x-6 bottom-6 flex flex-wrap gap-1.5 opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+            <span class="tag !border-signal/30 !text-signal">Overview</span>
+            {supervisorCount > 0 && <span class="tag !border-signal/30 !text-signal">Supervisors ({supervisorCount})</span>}
+            {raCount > 0 && <span class="tag !border-signal/30 !text-signal">Assistants ({raCount})</span>}
+            <span class="tag !border-signal/30 !text-signal">Publications ({pubCount})</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
