@@ -1,0 +1,87 @@
+{
+  "$ref": "#/definitions/supervisors",
+  "definitions": {
+    "supervisors": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "photo": {
+          "type": "string"
+        },
+        "designation": {
+          "type": "string"
+        },
+        "department": {
+          "type": "string",
+          "default": "Department of Computer Science"
+        },
+        "affiliation": {
+          "type": "string",
+          "default": "FEC CSE Research Lab"
+        },
+        "email": {
+          "type": "string"
+        },
+        "research_area": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "research_interests": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "education": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "experience": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "google_scholar": {
+          "type": "string"
+        },
+        "orcid": {
+          "type": "string"
+        },
+        "linkedin": {
+          "type": "string"
+        },
+        "website": {
+          "type": "string"
+        },
+        "featured": {
+          "type": "boolean",
+          "default": false
+        },
+        "order": {
+          "type": "number",
+          "default": 99
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "designation"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

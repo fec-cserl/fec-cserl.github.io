@@ -1,0 +1,55 @@
+{
+  "$ref": "#/definitions/research",
+  "definitions": {
+    "research": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "area_slug": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "icon": {
+          "type": "string",
+          "default": "cpu"
+        },
+        "objectives": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "current_research": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "featured": {
+          "type": "boolean",
+          "default": false
+        },
+        "order": {
+          "type": "number",
+          "default": 99
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "area_slug",
+        "summary"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

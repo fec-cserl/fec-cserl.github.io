@@ -1,0 +1,82 @@
+{
+  "$ref": "#/definitions/publications",
+  "definitions": {
+    "publications": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "authors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "year": {
+          "type": "number"
+        },
+        "venue": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "Journal",
+            "Conference",
+            "Workshop",
+            "Preprint"
+          ],
+          "default": "Conference"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "Published",
+            "Accepted",
+            "Under Review",
+            "Ongoing"
+          ],
+          "default": "Published"
+        },
+        "research_area": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "pdf": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        },
+        "dataset": {
+          "type": "string"
+        },
+        "doi": {
+          "type": "string"
+        },
+        "bibtex": {
+          "type": "string"
+        },
+        "featured": {
+          "type": "boolean",
+          "default": false
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "authors",
+        "year",
+        "venue"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

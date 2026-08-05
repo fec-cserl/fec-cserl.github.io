@@ -1,0 +1,59 @@
+{
+  "$ref": "#/definitions/alumni",
+  "definitions": {
+    "alumni": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "photo": {
+          "type": "string"
+        },
+        "previous_position": {
+          "type": "string"
+        },
+        "research_area": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "research_period": {
+          "type": "string"
+        },
+        "current_position": {
+          "type": "string"
+        },
+        "current_organization": {
+          "type": "string"
+        },
+        "achievements": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "profile_link": {
+          "type": "string"
+        },
+        "order": {
+          "type": "number",
+          "default": 99
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "previous_position",
+        "research_period"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}
