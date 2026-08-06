@@ -38,7 +38,7 @@ about:
   # it below (e.g. "images/people/director.jpg") — same pattern as everyone else.
   director:
     name: "Md. Shamsul Islam"
-    designation: "Lab Director"
+    designation: "Associate Professor & Head of the CSE Department"
     photo: "images/people/director.jpg"
     message: |
       Welcome to FEC Research Lab. Our goal is to build a strong research environment in the field of Computer Science and Engineering, where students can explore emerging technologies and contribute to innovative solutions.
