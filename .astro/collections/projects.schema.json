@@ -27,6 +27,13 @@
           },
           "default": []
         },
+        "technologies": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
         "start_date": {
           "type": "string"
         },

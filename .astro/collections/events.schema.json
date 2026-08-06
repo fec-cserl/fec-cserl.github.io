@@ -26,10 +26,16 @@
         "speaker": {
           "type": "string"
         },
+        "speaker_affiliation": {
+          "type": "string"
+        },
         "description": {
           "type": "string"
         },
         "registration_link": {
+          "type": "string"
+        },
+        "poster": {
           "type": "string"
         },
         "upcoming": {

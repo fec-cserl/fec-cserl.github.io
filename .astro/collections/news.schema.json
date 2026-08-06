@@ -38,6 +38,22 @@
         "description": {
           "type": "string"
         },
+        "abstract": {
+          "type": "string"
+        },
+        "authors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "link": {
+          "type": "string"
+        },
+        "pdf": {
+          "type": "string"
+        },
         "image": {
           "type": "string"
         },

@@ -16,9 +16,30 @@
             "Research Assistant",
             "Junior Research Assistant"
           ],
-          "default": "Research Assistant"
+          "default": "Junior Research Assistant"
+        },
+        "department": {
+          "type": "string",
+          "default": "Computer Science & Engineering"
+        },
+        "batch": {
+          "type": "string"
         },
         "research_area": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "research_interests": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "skills": {
           "type": "array",
           "items": {
             "type": "string"
@@ -28,7 +49,14 @@
         "supervisor": {
           "type": "string"
         },
-        "research_interests": {
+        "ongoing_research": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "education": {
           "type": "array",
           "items": {
             "type": "string"
@@ -41,7 +69,19 @@
         "linkedin": {
           "type": "string"
         },
-        "website": {
+        "portfolio": {
+          "type": "string"
+        },
+        "cv": {
+          "type": "string"
+        },
+        "google_scholar": {
+          "type": "string"
+        },
+        "orcid": {
+          "type": "string"
+        },
+        "researchgate": {
           "type": "string"
         },
         "featured": {

@@ -18,11 +18,16 @@ const pubs = allPubs.filter((p) => p.data.authors.some((a) => d.name.includes(a)
 const projects = allProjects.filter((p) => p.data.supervisor === d.name);
 
 const links = [
+  ['Portfolio', d.portfolio],
   ['Google Scholar', d.google_scholar],
   ['ORCID', d.orcid],
+  ['ResearchGate', d.researchgate],
   ['LinkedIn', d.linkedin],
+  ['GitHub', d.github],
+  ['CV', d.cv],
   ['Website', d.website],
 ].filter(([, v]) => v);
+
 ---
 <BaseLayout title={d.name}>
   <section class="max-w-content mx-auto px-6 py-20">

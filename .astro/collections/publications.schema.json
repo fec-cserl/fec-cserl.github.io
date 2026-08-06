@@ -46,16 +46,19 @@
           },
           "default": []
         },
+        "abstract": {
+          "type": "string"
+        },
         "pdf": {
+          "type": "string"
+        },
+        "doi": {
           "type": "string"
         },
         "code": {
           "type": "string"
         },
         "dataset": {
-          "type": "string"
-        },
-        "doi": {
           "type": "string"
         },
         "bibtex": {

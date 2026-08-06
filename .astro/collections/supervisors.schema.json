@@ -15,7 +15,7 @@
         },
         "department": {
           "type": "string",
-          "default": "Department of Computer Science"
+          "default": "Department of Computer Science & Engineering"
         },
         "affiliation": {
           "type": "string",
@@ -38,6 +38,16 @@
           },
           "default": []
         },
+        "keywords": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "research_profile": {
+          "type": "string"
+        },
         "education": {
           "type": "array",
           "items": {
@@ -52,16 +62,28 @@
           },
           "default": []
         },
+        "website": {
+          "type": "string"
+        },
+        "portfolio": {
+          "type": "string"
+        },
         "google_scholar": {
           "type": "string"
         },
         "orcid": {
           "type": "string"
         },
+        "researchgate": {
+          "type": "string"
+        },
         "linkedin": {
           "type": "string"
         },
-        "website": {
+        "github": {
+          "type": "string"
+        },
+        "cv": {
           "type": "string"
         },
         "featured": {
