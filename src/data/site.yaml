@@ -5,11 +5,11 @@
 # ═══════════════════════════════════════════════════════════════
 
 site_name: "FEC CSE Research Lab"
-site_short_name: "FEC CSE Lab"
+site_short_name: "FEC CSE Research Lab"
 tagline: "Advancing research in Artificial Intelligence, Computing, and Emerging Technologies."
 
 hero:
-  eyebrow: "Faculty of Engineering & Computing"
+  # eyebrow: "Faculty of Engineering & Computing"
   # Drop a wide photo of the lab into public/images/lab/ with this exact
   # filename and it becomes the homepage hero background automatically.
   # Until then, a designed gradient placeholder is shown instead.
@@ -37,13 +37,13 @@ about:
   # real details, and drop a photo into public/images/people/ then reference
   # it below (e.g. "images/people/director.jpg") — same pattern as everyone else.
   director:
-    name: "Director's Name"
+    name: "Md. Shamsul Islam"
     designation: "Lab Director"
     photo: "images/people/director.jpg"
     message: |
-      Welcome to FEC CSE Research Lab. Replace this placeholder with the
-      Director's own welcome message — a few sentences on the lab's mission,
-      what it's like to work here, and what the lab looks for in new members.
+      Welcome to FEC Research Lab. Our goal is to build a strong research environment in the field of Computer Science and Engineering, where students can explore emerging technologies and contribute to innovative solutions.
+      We focus on advancing research in areas such as Artificial Intelligence, Machine Learning, Deep Learning, Computer Vision, Natural Language Processing, Data Science, and Software Engineering. Through collaboration, mentorship, and hands-on research experience, we aim to develop skilled researchers capable of addressing real-world challenges.
+      We encourage students to explore, experiment, and transform their ideas into impactful research outcomes. Together, we are building a culture of innovation and excellence at Faridpur Engineering College.
 
 # Homepage "Inside the Lab" gallery.
 # Drop real photos into public/images/lab/ using these exact filenames and
@@ -53,17 +53,15 @@ gallery:
   - filename: "workspace.jpg"
     caption: "The main research workspace"
   - filename: "seminar.jpg"
-    caption: "Weekly research seminar"
-  - filename: "whiteboard.jpg"
-    caption: "Whiteboard problem session"
+    caption: "Research seminar"
   - filename: "team.jpg"
-    caption: "The team, Spring 2026"
+    caption: ""
 
 contact:
-  address: "Faculty of Engineering & Computing, [Your University Name], [City, Country]"
-  email: "ccr@example.edu"
+  address: "Faculty of Computer Science & Engineering, Faridpur Engineering College, Faridpur, Bangladesh"
+  email: "shamsul.cse@sec.ac.bd"
   phone: "+00 000 000 000"
-  map_embed_url: ""
+  map_embed_url: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d182.38422718878266!2d89.85373843812454!3d23.597356332389616!2m3!1f0!2f5.347862698084955!3f0!3m2!1i1024!2i768!4f35!3m3!1m2!1s0x39fe25852e89b875%3A0xdfc20e4ad638804d!2sSoftware%20Lab%2C%20CSE%20Building!5e1!3m2!1sen!2ssg!4v1785974142671!5m2!1sen!2ssg"
 
 join:
   heading: "Join Our Research Community"
@@ -72,7 +70,7 @@ join:
   # create a form, and paste its endpoint below — e.g.
   # "https://formspree.io/f/abcdwxyz". Leave blank to show a setup notice
   # instead of the live form.
-  formspree_endpoint: ""
+  formspree_endpoint: "https://forms.gle/qdfD3P8E7Gqn3cAr8"
   positions:
     - "Research Assistant"
     - "Junior Research Assistant"
@@ -80,13 +78,13 @@ join:
     - "Intern"
   opportunities:
     - title: "Research Assistant Positions"
-      description: "Funded positions for graduate students working alongside our supervisors on active projects."
-    - title: "Undergraduate Research Opportunities"
+      description: ""
+    - title: "Junior Research Assistant Positions"
       description: "Short-term research placements for final-year undergraduates to gain hands-on experience."
     - title: "Thesis Opportunities"
       description: "Supervised undergraduate and postgraduate thesis topics across all active research areas."
-    - title: "Internships"
-      description: "Summer and semester-long internships for students exploring a research career."
+    #- title: "Internships"
+    #  description: "Summer and semester-long internships for students exploring a research career."
   available_topics:
     - "Efficient fine-tuning of large language models"
     - "Explainable computer vision for medical imaging"
@@ -101,7 +99,7 @@ join:
 footer:
   socials:
     - label: "GitHub"
-      href: "https://github.com/"
+      href: "https://github.com/fec-cserl"
     - label: "LinkedIn"
       href: "https://linkedin.com/"
     - label: "Google Scholar"
